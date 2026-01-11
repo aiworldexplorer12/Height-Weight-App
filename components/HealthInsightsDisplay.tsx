@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { AIInsight } from '../types';
+import { AIInsight } from '../types.ts';
 
 interface Props {
   insights: AIInsight;

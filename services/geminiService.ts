@@ -1,8 +1,8 @@
 
 import { GoogleGenAI, Type } from "@google/genai";
-import { HealthData, AIInsight } from "../types";
+import { HealthData, AIInsight } from "../types.ts";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY! });
+const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || "" });
 
 export const getHealthInsights = async (data: HealthData): Promise<AIInsight> => {
   const prompt = `

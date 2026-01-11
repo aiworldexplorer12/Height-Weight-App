@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Gender, HealthData } from '../types';
+import { Gender, HealthData } from '../types.ts';
 
 interface Props {
   data: HealthData;

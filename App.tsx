@@ -1,10 +1,10 @@
 
-import React, { useState, useCallback } from 'react';
-import { HealthData, WeightCalculations, AIInsight } from './types';
-import HeightInput from './components/HeightInput';
-import WeightChart from './components/WeightChart';
-import HealthInsightsDisplay from './components/HealthInsightsDisplay';
-import { getHealthInsights } from './services/geminiService';
+import React, { useState } from 'react';
+import { HealthData, WeightCalculations, AIInsight } from './types.ts';
+import HeightInput from './components/HeightInput.tsx';
+import WeightChart from './components/WeightChart.tsx';
+import HealthInsightsDisplay from './components/HealthInsightsDisplay.tsx';
+import { getHealthInsights } from './services/geminiService.ts';
 
 const App: React.FC = () => {
   const [data, setData] = useState<HealthData>({
@@ -24,7 +24,6 @@ const App: React.FC = () => {
     const heightM = heightCm / 100;
     const inchesOver5ft = Math.max(0, heightIn - 60);
 
-    // Ideal Body Weight Formulas (IBW)
     let devine, robinson, miller;
     if (gender === 'male') {
       devine = 50 + 2.3 * inchesOver5ft;
@@ -36,12 +35,11 @@ const App: React.FC = () => {
       miller = 53.1 + 1.36 * inchesOver5ft;
     }
 
-    // Normal BMI Range (18.5 to 25)
     const rangeMin = 18.5 * (heightM * heightM);
     const rangeMax = 25 * (heightM * heightM);
 
     return {
-      bmi: 0, // Placeholder, usually calculated with current weight
+      bmi: 0,
       bmiCategory: "Healthy Range Focus",
       idealWeightDevine: Math.round(devine * 10) / 10,
       idealWeightRobinson: Math.round(robinson * 10) / 10,
@@ -62,7 +60,7 @@ const App: React.FC = () => {
       setInsights(aiResponse);
     } catch (err) {
       console.error(err);
-      setError("Failed to generate insights. Please check your connection and try again.");
+      setError("Failed to generate insights. Please check your connection and ensure your API key is configured correctly.");
     } finally {
       setLoading(false);
     }
@@ -70,7 +68,6 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 pb-20">
-      {/* Header */}
       <header className="bg-white border-b border-slate-200 sticky top-0 z-10">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -91,7 +88,6 @@ const App: React.FC = () => {
 
       <main className="max-w-6xl mx-auto px-4 pt-8">
         <div className="grid lg:grid-cols-12 gap-8">
-          {/* Left Column: Input */}
           <div className="lg:col-span-4 space-y-6">
             <HeightInput 
               data={data} 
@@ -114,7 +110,6 @@ const App: React.FC = () => {
             )}
           </div>
 
-          {/* Right Column: Results & Analysis */}
           <div className="lg:col-span-8 space-y-8">
             {!calculations && !loading && (
               <div className="h-full flex flex-col items-center justify-center text-center p-12 bg-white rounded-2xl border-2 border-dashed border-slate-200">
